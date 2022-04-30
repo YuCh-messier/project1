@@ -45,14 +45,68 @@
                 <div :class="{'choosed':ifchoosed[4]}" @click="changeC(4)">我的项目</div>
                 <div :class="{'choosed':ifchoosed[5]}" @click="changeC(5)">我的消息</div>
             </div>
-            <div>
+            <div v-if="ifchoosed[0]">
+                <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>头像</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>用户名</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>性别</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>出生年份</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
-                <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>毕业年份</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>电话号码</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>邮箱地址</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
                 <div style="border-bottom: 1px solid black;margin: 25px;display: flex;justify-content: space-around;"><h5>专业</h5><h6>XXXXXXXXXXXXXX</h6><button>修改</button></div>
+            </div>
+            <div v-if="ifchoosed[1]">
+                <div>
+                    <div>个人简介</div>
+                    <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+                </div>
+                <div>
+                    <div>教育经历（本科及以上）</div><button @click="addaffair('edulist')">增加</button>
+                    <div v-for="i in edulist">
+                        <div style="border-top: 1px solid black;">学校名称</div><input />
+                        <div style="display: inline-block;">学历</div><input />
+                        <div style="display: inline-block;">时间段</div><input type="date"/>到<input type="date">
+                        <div style="display: inline-block;">专业</div><input>
+                        <div>在校经历</div><textarea></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div>实习经历</div><button @click="addaffair('emplist')">增加</button>
+                    <div v-for="i in emplist">
+                        <div style="border-top: 1px solid black;">公司名称</div><input />
+                        <div style="display: inline-block;">时间段</div><input type="date"/>到<input type="date">
+                        <div style="display: inline-block;">职位</div><input>
+                        <div>实习经历</div><textarea></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div>项目经历</div><button @click="addaffair('prolist')">增加</button>
+                    <div v-for="i in prolist">
+                        <div style="border-top: 1px solid black;">项目名称</div><input />
+                        <div style="display: inline-block;">时间段</div><input type="date"/>到<input type="date">
+                        <div style="display: inline-block;">项目角色</div><input>
+                        <div>项目描述</div><textarea></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div>附件上传</div><input type="file">
+                    <div>（简历展示）</div>
+                    <div>其他</div>
+                    <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+                </div>
+            </div>
+            <div v-if="ifchoosed[2]">
+                <affairtemp :affairs="allRecruit" @gospeaffair="goSpeRecruit"></affairtemp>
+            </div>
+            <div v-if="ifchoosed[3]">
+                <affairtemp :affairs="foruu" @gospeaffair="console.log(none)"></affairtemp>
+                <div style="display: flex;justify-content: space-around;">
+                    <div>已上传</div>
+                    <div>已浏览（管理界面浏览触发）</div>
+                    <div>已完成（消息回传触发）</div>
+                </div>
+            </div>
+            <div v-if="ifchoosed[5]">
+                <affairtemp :affairs="allRecruit" @gospeaffair="goSpeRecruit"></affairtemp>
             </div>
         </div>
 
@@ -68,12 +122,48 @@
         var app = Vue.createApp({
             data() {
                 return {
-                    ifchoosed:[true,false,false,false,false,false]
+                    ifchoosed:[true,false,false,false,false,false],
+                    edulist:[0],
+                    emplist:[0],
+                    prolist:[0],
+                    allRecruit:[]
+                }
+            },
+            computed:{
+                foruu(){
+                    return this.allRecruit.slice(0,1)
                 }
             },
             mounted(){
+                $.post(
+                    hostDomain+'/recruit/allrecruit/showAllRecruit',
+                    {
+
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.allRecruit=data.content
+                            this.showRecruit=data.content
+                            this.totalNum=data.totalNum
+                        }
+                    }
+                )
             },
             methods: {
+                addaffair(i){
+                    if(i=='edulist'){
+                        this.edulist.push(0)
+                    }
+                    if(i=='emplist'){
+                        this.emplist.push(0)
+                    }
+                    if(i=='prolist'){
+                        this.prolist.push(0)
+                    }
+                },
                 goSubmitForm(){
                     if(checkAccount()){
                         window.location=hostDomain+'/submitInfor/submitForm/submitForm.html?affairType=recruit&recruitId='+this.recruitId
@@ -87,6 +177,7 @@
         })
         app.component('headertemp',headerTemp)
         app.component('footertemp',footerTemp)
+        app.component('affairtemp',affairTemp)
         const vm = app.mount('.container-all')
         vm.$data.recruitId=recruitId
     </script>

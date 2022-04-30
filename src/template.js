@@ -16,24 +16,22 @@ headerTemp=(function(){
                   元宇宙实习
                 </div>            
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <li><a class="dropdown-item" href="http://124.223.155.169:3002/internship/internships.html">实习列表</a></li>
-                  <li><a class="dropdown-item" href="http://124.223.155.169:3002/internship/internships.html">我的实习</a></li>
+                  <li><a class="dropdown-item" href="http://localhost:3002/internship/internships.html">实习列表</a></li>
                 </ul>
             </div>
-            <div onclick="window.location='http://124.223.155.169:3002/activity/activity.html';">金领活动</div>
+            <div onclick="window.location='http://localhost:3002/activity/activity.html';">金领活动</div>
             <div class="dropdown">
                 <div class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   招聘内推
                 </div>            
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <li><a class="dropdown-item" href="http://124.223.155.169:3002/recruit/recruit.html">招聘信息</a></li>
-                  <li><a class="dropdown-item" href="http://124.223.155.169:3002/recruit/recruit.html">内推渠道</a></li>
-                  <li><a class="dropdown-item" href="http://124.223.155.169:3002/recruit/recruit.html">我的投递</a></li>
+                  <li><a class="dropdown-item" href="http://localhost:3002/recruit/recruit.html">招聘信息</a></li>
+                  <li><a class="dropdown-item" href="http://localhost:3002/recruit/recommend.html">内推渠道</a></li>
                 </ul>
             </div>
-            <div onclick="window.location='http://124.223.155.169:3002/instruct/instruct.html';">职前培训</div>
+            <div onclick="window.location='http://localhost:3002/instruct/instruct.html';">职前培训</div>
             <div>商务合作</div>
-            <div id="head_img"><img src="" alt="" /></div>
+            <div onclick="window.location='http://localhost:3002/userSetting/userSetting.html';" id="head_img"><img src="" alt="" /></div>
             <div style="margin-right:0px;font-weight: normal;font-size: small;">用户名</div>
         </div>`
     }
@@ -152,8 +150,8 @@ speContentTemp=(function(){
                 <div class="tap">{{speaffair.tap}}</div>
                 <div>{{speaffair.position}}</div>
                 <div>{{speaffair.time}}</div>
-                <div>4天/周</div>
-                <div>300-350元/天</div>
+                <div>{{speaffair.worktime}}</div>
+                <div>{{speaffair.salary}}</div>
             </div>
             <div id="speContents">
                 <div id="speContent">
@@ -164,7 +162,7 @@ speContentTemp=(function(){
                     <div style="border-top-left-radius:10px;border-top-right-radius:10px;background-color: black;padding: 5%;display: flex;justify-content: center;margin: 0;"><img :src="company.companyIcon" alt=""></div>
                     <div style="font-weight: bold;">公司简介</div>
                     <div>{{company.companyDes}}</div>
-                    <div style="font-weight: bold;">联系我们</div>
+                    <div style="font-weight: bold;">公司标签</div>
                     <div style="color: #888;">互联网 | 大数据</div>
                 </div>
             </div>

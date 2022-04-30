@@ -1,4 +1,4 @@
-var hostDomain='http://127.0.0.1:3000'
+var hostDomain='http://127.0.0.1:3002'
 
 function getQueryVariable(variable)
 {
@@ -23,13 +23,13 @@ function hasCookieOrNot(targer){
     return [false,'nono']
 }
 
-function checkAccount(){
+function checkPermission(){
     var userToken=hasCookieOrNot('userToken')
     var userTelephone=hasCookieOrNot('userTelephone')
-    if(userToken[0] && userTelephone[0]){
+    if(true){
         $.post(
-            hostDomain+'/checkAuthority/checkAccount',
-            {userTelephone:userTelephone,userToken:userToken},
+            hostDomain+'/check/checkPermission',
+            {userTelephone:'xxxxxxxxxxx',affairId:'xxxxxxxxxxxxx'},
             (data,status)=>{
                 if(Number(status)==500){
                     return false
@@ -46,3 +46,50 @@ function checkAccount(){
         )
     }
 }
+
+function checkAccount(){
+    var userToken=hasCookieOrNot('userToken')
+    var userTelephone=hasCookieOrNot('userTelephone')
+    if(true){
+        $.post(
+            hostDomain+'/check/checkUser',
+            {userTelephone:'xxxxxxxxxxx',userToken:'xxxxxxxxxxxxx'},
+            (data,status)=>{
+                checkPermission()
+                if(Number(status)==500){
+                    return false
+                }
+                else{
+                    if(data.authority=='succeed'){
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+                }
+            }
+        )
+    }
+}
+
+function collectPage(){
+    $.post(
+        hostDomain+'/user/collectPage',
+        {userTelephone:'xxxxxxxxxxx',pageUrl:'xxxxxxxxxxxxx'},
+        (data,status)=>{
+            checkPermission()
+            if(Number(status)==500){
+                return false
+            }
+            else{
+                if(data.authority=='succeed'){
+                    return true
+                }
+                else{
+                    return false
+                }
+            }
+        }
+    )
+}
+

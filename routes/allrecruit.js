@@ -22,35 +22,20 @@ router.post('/showAllRecruit', function(req, res, next) {
     {title:'字节跳动商业化战略分析实习',company:'字节跳动9',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
     {title:'字节跳动商业化战略分析实习',company:'字节跳动10',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
     {title:'字节跳动商业化战略分析实习',company:'字节跳动11',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动12',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动13',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动14',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动15',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动1+',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动17',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动18',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动19',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动20',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动21',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动22',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动23',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动24',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动25',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动26',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动27',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动28',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
-    {title:'字节跳动商业化战略分析实习',company:'字节跳动29',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''},
     {title:'字节跳动商业化战略分析实习',company:'字节跳动30',position:'武汉光谷',time:"2022年3月17日",tap:"实习",companyIcon:''}
   ]
   res.send({content:res1.slice(0,number),totalNum:res1.length})
 });
 
 router.post('/showSpeRecruit', function(req, res, next) {
+  console.log(req.body)
   var content={
     title:'字节跳动商业化战略分析实习',
     company:'字节跳动30',
     position:'武汉光谷',
     time:"2022年3月17日",
+    worktime:'4天一周',
+    salary:'350-400/天',
     tap:"实习",companyIcon:'https://image.baidu.com/search/index?tn=baiduimage&ps=1&ct=201326592&lm=-1&cl=2&nc=1&ie=utf-8&dyTabStr=MCwxLDMsMiw2LDQsNSw3LDgsOQ%3D%3D&word=%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8',
     content:`【职位描述】
     1、支持字节跳动全系产品（包括今日头条、西瓜视频、抖音等）的商业化战略和大客户策略；
