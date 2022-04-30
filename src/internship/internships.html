@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘信息</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link href="../public.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="./recruit.css" rel="stylesheet">
+    <style>
+
+    </style>
+    </head>
+
+    <body>
+
+    <div class="container-all">
+
+        <div class="">
+            <headerTemp></headerTemp>
+        </div>
+        
+
+        <div class ="container">
+            <h2 style="margin: 30px 0px;">远程实习</h2>
+            <!-- 搜索与分类 -->
+            <div id="setSort">
+                <input type="text" placeholder="  关键词" v-model="keyWord">
+                <input type="text" placeholder="  位置" v-model="sort">
+                <button @click="recruitSorter">搜索</button>
+            </div>
+
+            <!-- 渲染所有项目 -->
+            <div id="projects" style="">
+                <div @click="goSpeRecruit" class="project" v-for="project in showRecruit" style="background-color: white;display: inline-block;width: 45%;margin: 2% 2%;border: 1px solid #ddd;">
+                    <div style="display: flex;align-items: center;">
+                        <div style="width: 40%;"><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.taoguba.com.cn%2Fimg%2F2020%2F04%2F16%2F3pvuo4l5xpsh.jpg_max.png&refer=http%3A%2F%2Fimage.taoguba.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653570059&t=87040f15ca232dcaed6d5996b4e4cf80" style="background-color: antiquewhite;border-radius: 10px;box-shadow: 5px 5px 10px 0px #888;width: 100%;"></div>
+                        <div style="width: 50%;">
+                            <div class="tap bg-primary" style="width: fit-content;padding: 5px 15px;margin: auto;border-radius: 15px;font-weight: bold;color: white;margin-bottom: 5px;">产品经理</div>
+                            <div class="tap bg-primary" style="width: fit-content;padding: 5px 15px;margin: auto;border-radius: 15px;font-weight: bold;color: white;">职前教育</div>
+                        </div>
+                    </div>
+                    <div style="background-position:center 80%;background-size: cover;background-image:url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.ithome.com%2Fnewsuploadfiles%2F2021%2F4%2Fbfaa7ab0-4d20-4c84-93f3-7f485f83689d.jpeg&refer=http%3A%2F%2Fimg.ithome.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653570966&t=25264be92b304e95b80c4a9921981e8b) ;">
+                        <h5 style="color: white;margin:0px auto; margin-top: 10px;padding-left: 20px;padding-top: 20px;">{{project.title}}</h5>
+                        <div style="display: flex;align-items: center;padding: 15px;">
+                            <img style="margin-right: 20px;width: 50px;height:50px;overflow: hidden;border-radius: 100%;" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.taoguba.com.cn%2Fimg%2F2020%2F04%2F16%2F3pvuo4l5xpsh.jpg_max.png&refer=http%3A%2F%2Fimage.taoguba.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653570059&t=87040f15ca232dcaed6d5996b4e4cf80" alt="">
+                            <div style="color: #ddd;">{{project.company}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 翻页 -->
+            <pageTemp :pages="pages" @changepage="changePage" v-if="ifNormal"></pageTemp>
+        </div>
+
+        <div class="">
+            <footertemp></footertemp>
+        </div>
+        
+    </div>
+
+    <script src="../public.js"></script>
+    <script src="../template.js"></script>
+    <script>
+        var onePage=6
+        var app = Vue.createApp({
+            data() {
+                return {
+                    sort:'',
+                    keyWord:'',
+                    allRecruit:[],
+                    totalNum:'',
+                    showRecruit:[],
+                    sortedAllRecruit:[],
+                    ifNormal:true
+                }
+            },
+            computed:{
+                pages(){
+                    var pages=this.totalNum/onePage
+                    var res=[]
+                    for(let i=0;i<pages;i++){
+                        res.push(i+1)
+                    }
+                    return res
+                }
+            },
+            mounted(){
+                $.post(
+                    hostDomain+'/recruit/allrecruit/showAllRecruit',
+                    {
+                        sort:this.sort,
+                        keyWord:this.keyWord,
+                        number:onePage
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.allRecruit=data.content
+                            this.showRecruit=data.content
+                            this.totalNum=data.totalNum
+                        }
+                    }
+                )
+            },
+            methods: {
+                goSpeRecruit(recruitId){
+                    window.location='./speIntership.html?recruitId='+recruitId
+                },
+                recruitSorter(){
+                    if(this.sort !='' || this.keyWord!=''){
+                    this.ifNormal=false
+                    $.post(
+                        hostDomain+'/recruit/allrecruit/showAllRecruit',
+                        {
+                            sort:this.sort,
+                            keyWord:this.keyWord,
+                        },
+                        (data,status)=>{
+                            if(Number(status)==500){
+                                alert('好像出了点问题')
+                            }
+                            else{
+                                this.sortedAllRecruit=data.content
+                            }
+                        }
+                    )}
+                    else{this.ifNormal=true}
+                },
+                changePage(i){
+                    if(!(this.allRecruit.length>(i-1)*onePage)){
+                        $.post(
+                            hostDomain+'/recruit/allrecruit/showAllRecruit',
+                            {
+                                sort:this.sort,
+                                keyWord:this.keyWord,
+                                number:i*onePage
+                            },
+                            (data,status)=>{
+                                if(Number(status)==500){
+                                    alert('好像出了点问题')
+                                }
+                                else{
+                                    this.allRecruit=data.content
+                                    this.totalNum=data.totalNum
+                                    this.showRecruit=this.allRecruit.slice((i-1)*onePage,i*onePage)
+                                }
+                            }
+                        )
+                    }
+                    else{
+                        this.showRecruit=this.allRecruit.slice((i-1)*onePage,i*onePage)
+                    }
+                }
+            }
+        })
+        app.component('headertemp',headerTemp)
+        app.component('footertemp',footerTemp)
+        app.component('affairtemp',affairTemp)
+        app.component('pagetemp',pageTemp)
+        const vm = app.mount('.container-all')
+    </script>
+</body>
+
+</html>

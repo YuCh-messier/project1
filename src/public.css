@@ -1,0 +1,191 @@
+a{
+    text-decoration: none;
+}
+body{
+    background-color: rgb(245, 245, 245);
+}
+.container{
+    padding:0px 5%;
+}
+/* 全局设置 */
+
+#header{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    box-shadow:0px 0px 10px 5px rgb(200, 200, 200);
+    font-size: small;
+    color: rgb(100, 100, 100);
+}
+#header div{
+    margin: 5px 1.5%;
+}
+#head_img{
+    background-color: antiquewhite;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+}
+.dropdown-toggle:hover{
+    color: orange;
+}
+#header>div:hover{
+    color: orange;
+}
+.dropdown-item{
+    font-size: small;
+    color: rgb(100, 100, 100);
+}
+.dropdown-item:hover{
+    color: orange;
+}
+#logo{
+    width: 80px;
+    height: 35px;
+    background-color: aqua;
+}
+/* 顶部选区css */
+
+#ppt{
+    height: 200px;
+    width: 100%;
+    background-color: burlywood;
+}
+/* 产品ppt css */
+
+#footer{
+    background-color: rgb(50, 50, 50);
+    color: rgb(200, 200, 200);
+    padding: 50px;
+    font-size: small;
+}
+#copyright{
+    width: fit-content;
+    margin: 0 auto;
+}
+#com_intro{
+    width: fit-content;
+    margin: 0 auto;
+}
+.QRcode{
+    background-color: antiquewhite;
+    width: 80px;
+    height: 80px;
+    margin: 20px;
+}
+/* footer 选区 css*/
+
+.changePageF{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    width: 70px;
+    height: 35px;
+    border: 1px solid #aaa;
+    margin: 0 5px;
+}
+.changePage{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    width: 35px;
+    height: 35px ;
+    border: 1px solid #aaa;margin: 0 5px;
+}
+.changePage:hover{
+    color: orange;
+}
+.changePageF:hover{
+    color: orange;
+}
+#changePageBox{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+/* 翻页格式 */
+
+#setSort{
+    margin: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+#setSort input{
+    width: 40%;
+    border: 1px solid rgb(200, 200, 200);
+}
+#setSort button{
+    padding: 5px 3%;
+    border-radius: 15px;
+    background-color: #ffcc00;
+    border: none;
+    font-size: small;
+}
+/* 搜索框格式 */
+
+#affairBox{
+    border: 1px solid #ddd;
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+#affairBox>div{
+    background-color: white;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: small;
+    color: #888;
+}
+#affairBox img{
+    margin-right:10px; 
+    width: 60px;
+    height: 60px;
+    background-color: #ffcc00;
+    border-radius: 100%;
+}
+#affairBox .tap{
+    padding: 3px 5px;
+    border-radius: 15%; 
+    background-color: rgb(200, 200, 255);
+    color: rgb(100, 100, 255);
+}
+/* 项目渲染格式 */
+#speContents{
+    display: flex;
+}
+#titleBox>div{
+    margin: 10px;
+}
+#speContent{
+    width: 60%;
+    background-color: white;
+    padding: 5%;
+    border: 1px solid #ddd;
+    white-space: pre-line;
+}
+#companyBox img{
+    width: 50%;
+    height: fit-content;
+}
+#companyBox{
+    width: 35%;
+    border-radius: 10px;
+    background-color: white;
+    margin-left: 5%;
+    border-radius: 10px;
+}
+#companyBox>div{
+    margin:20px;
+}
+.tap{
+    padding: 3px 5px;
+    border-radius: 15%; 
+    background-color: rgb(200, 200, 255);
+    color: rgb(100, 100, 255);
+}

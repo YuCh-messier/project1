@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘信息</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link href="../public.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    </head>
+
+    <body>
+    <div class="container-all">
+        <div class="">
+            <headerTemp></headerTemp>
+        </div>
+
+        <div class ="container">
+
+        <!-- 渲染具体页面 -->
+        <specontenttemp :speaffair="speRecruit" :company="company" style="margin: 70px 0;"></specontenttemp>
+
+        <div id="map" style="background-color: aqua;width: 80%;height: 0;padding-bottom: 40%;margin:20px auto;"></div>
+
+        <div style="display: flex;justify-content: center;">
+            <button class="btn btn-warning" style="margin: 0 5% 5% 0;">我要报名</button>
+            <button class="btn btn-warning" style="margin: 0 0 5% 5%;">收藏页面</button>
+        </div>
+
+        </div>
+
+        <div class="">
+            <footertemp></footertemp>
+        </div>
+    </div>
+    <script src="../public.js"></script>
+    <script src="../template.js"></script>
+    <script src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=gVBo0gAldhBBGKLbisIhM7Gj7GLM13Mf"></script>
+    <script>
+        var map = new BMapGL.Map("map");
+        // 创建地图实例 
+        var point = new BMapGL.Point(116.404, 39.915);
+        // 创建点坐标 
+        map.centerAndZoom(point, 15);
+
+        var recruitId=getQueryVariable('recruitId')
+        var app = Vue.createApp({
+            data() {
+                return {
+                    recruitId:recruitId,
+                    speRecruit:{},
+                    company:{}
+                }
+            },
+            mounted(){
+                $.post(
+                    hostDomain+'/recruit/allrecruit/showSpeRecruit',
+                    {
+                        recruitId:this.recruitId
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.speRecruit=data.content
+                            this.company=data.company
+                            console.log(data.content)
+                        }
+                    }
+                )
+            },
+            methods: {
+                goSubmitForm(){
+                    if(checkAccount()){
+                        window.location=hostDomain+'/submitInfor/submitForm/submitForm.html?affairType=recruit&recruitId='+this.recruitId
+                    }
+                }
+            }
+        })
+        app.component('headertemp',headerTemp)
+        app.component('footertemp',footerTemp)
+        app.component('specontenttemp',speContentTemp)
+        const vm = app.mount('.container-all')
+        vm.$data.recruitId=recruitId
+    </script>
+</body>
+
+</html>

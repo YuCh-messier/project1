@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘广场</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link href="../../public.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    </head>
+
+    <body>
+    <div class ="container-fluid">
+        <headertemp></headertemp>
+
+        <!-- 渲染具体页面 -->
+        <div>
+            <!-- 内推介绍 -->
+            <div></div>
+            <!-- 公司介绍 -->
+            <div></div>
+        </div>
+
+        <footertemp></footertemp>
+    </div>
+    <script src="../../public.js"></script>
+    <script src="../../template.js"></script>
+    <script>
+        var recommendId=getQueryVariable('recommendId')
+        var app = Vue.createApp({
+            data() {
+                return {
+                    recommendId:recommendId,
+                    speRecommend:{}
+                }
+            },
+            mounted(){
+                $.post(
+                    hostDomain+'/recommend/showSpeRecommend',
+                    {
+                        recommendId:this.recommendId
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.speRecommend=data.content
+                        }
+                    }
+                )
+            },
+            methods: {
+                goSubmitForm(){
+                    if(checkAccount()){
+                        window.location=hostDomain+'/submitInfor/submitForm/submitForm.html?affairType=recommend&recommendId='+this.recommendId
+                    }
+                }
+            }
+        })
+        app.component('headertemp',headerTemp)
+        app.component('footertemp',footerTemp)
+        const vm = app.mount('.container-fluid')
+        vm.$data.recommendId=recommendId
+    </script>
+</body>
+
+</html>

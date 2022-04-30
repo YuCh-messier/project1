@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘广场</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+    <link href="../public.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    </head>
+
+    <body>
+    <div class ="container-fluid">
+        <headertemp></headertemp>
+
+        <!-- 搜索与分类 -->
+        <div></div>
+
+        <!-- 渲染所有内推 -->
+        <div>
+            <div v-for="allRecommend" @click="goSpeRecommend()"></div>
+        </div>
+        
+        <footertemp></footertemp>
+    </div>
+    <script src="../public.js"></script>
+    <script src="../template.js"></script>
+    <script>
+        var app = Vue.createApp({
+            data() {
+                return {
+                    sort:'default',
+                    keyWord:'default',
+                    allRecommend:[],
+                    showRecommend:[],
+                    number:12
+                }
+            },
+            mounted(){
+                $.post(
+                    hostDomain+'/recommend/showAllRecommend',
+                    {
+                        sort:this.sort,
+                        keyWord:this.keyWord,
+                        number:this.number
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.allRecommend=data.content
+                            this.showRecommend=data.content
+                        }
+                    }
+                )
+            },
+            methods: {
+                goSpeRecommend(recommendId){
+                    window.location='./speRecommend/speRecommend.html?recommendId='+recommendId
+                },
+                recommendSorter(){
+                    $.post(
+                    hostDomain+'/recommend/showAllRecommend',
+                    {
+                        sort:this.sort,
+                        keyWord:this.keyWord
+                    },
+                    (data,status)=>{
+                        if(Number(status)==500){
+                            alert('好像出了点问题')
+                        }
+                        else{
+                            this.showRecommend=data.content
+                        }
+                    }
+                ) 
+                },
+                changePage(i){
+                    if(this.number<i*12){
+                        this.number=this.number+12
+                        $.post(
+                            hostDomain+'/recommend/showAllRecommend',
+                            {
+                                sort:this.sort,
+                                keyWord:this.keyWord,
+                                number:this.number
+                            },
+                            (data,status)=>{
+                                if(Number(status)==500){
+                                    alert('好像出了点问题')
+                                }
+                                else{
+                                    this.allRecommend=data.content
+                                    this.showRecommend=this.allRecommend.slice((i-1)*12,i*12)
+                                }
+                            }
+                        )
+                    }
+                    else{
+                        this.showRecommend=this.allRecommend.slice((i-1)*12,i*12)
+                    }
+                }
+            }
+        })
+        app.component('headertemp',headerTemp)
+        app.component('footertemp',footerTemp)
+        const vm = app.mount('.container-fluid')
+    </script>
+</body>
+
+</html>
